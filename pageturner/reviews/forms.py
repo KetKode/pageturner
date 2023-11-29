@@ -1,5 +1,6 @@
 from django import forms
 from .models import Publisher, Review, Book, BookImport, ReviewComment
+from .utils import genre_tuples, author_tuples
 
 
 class BookSearchForm(forms.Form):
@@ -34,3 +35,50 @@ class ReviewCommentForm(forms.ModelForm):
         model = ReviewComment
         fields = ["body"]
 
+
+class BookRecommendationsForm1(forms.ModelForm):
+    type_choices = [
+        ("CLAS", "Classics"),
+        ("CONT", "Contemporary")
+        ]
+    choice_type = forms.ChoiceField(choices=type_choices)
+
+
+class BookRecommendationsForm2(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        genre_choices = genre_tuples(request)
+
+        self.fields['genre_choice'] = forms.MultipleChoiceField(choices=genre_choices)
+
+
+class BookRecommendationsForm3(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        authors_choices = author_tuples(request)
+
+        self.fields['author_choice'] = forms.MultipleChoiceField(choices=authors_choices)
+
+
+class BookRecommendationsForm4(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        genre_choices = genre_tuples(request)
+
+        self.fields['no_genre_choice'] = forms.MultipleChoiceField(choices=genre_choices)
+
+
+class BookRecommendationsForm5(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        authors_choices = author_tuples(request)
+
+        self.fields['no_author_choice'] = forms.MultipleChoiceField(choices=authors_choices)
+
+
+class BookRecommendationsForm6(forms.ModelForm):
+    rating = forms.CharField(widget=forms.HiddenInput())

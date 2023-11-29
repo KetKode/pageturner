@@ -53,6 +53,11 @@ class Book(models.Model):
     def get_genres_list(self):
         return [genre.strip() for genre in self.genres.split(',')]
 
+    def get_genres_tuples(self):
+        genres_list = self.get_genres_list()
+        genre_tuples_list = [genre.upper()[:4] for genre in genres_list]
+        return list(zip(genres_list, genre_tuples_list))
+
     def get_age_list(self):
         return [age_item.strip() for age_item in self.age.split(',')]
 

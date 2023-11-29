@@ -24,6 +24,7 @@ def welcome_page(request):
     random_books = random.sample(books, 12)
     book_collections = list(BookCollection.objects.all())
 
+
     if request.user.is_authenticated:
 
         liked_books = Book.objects.filter(Q(likes=True) & Q(main_genre__isnull=False))
@@ -37,7 +38,7 @@ def welcome_page(request):
             random_friends_recommended_books = Book.objects.filter(Q(main_genre__in=main_random_friends_liked_genres)).order_by('?')
             random_friends_recommendations = random_friends_recommended_books[:6]
         else:
-            random_friends_recommendations = random.sample (books, 6)
+            random_friends_recommendations = random.sample(books, 6)
 
         if liked_books:
             main_liked_genres = [book.main_genre for book in liked_books]
@@ -292,16 +293,7 @@ def review_share(request, pk):
 #     return "#{:02x}{:02x}{:02x}".format(r, g, b)
 
 
-def genre_selection(request):
-    unique_genres = Book.objects.exclude(tags=None).values_list('genres', flat=True).distinct()
 
-    # Remove None values and split tags into individual genres
-    genres_list = [genre.strip() for genres in unique_genres if genres for genre in genres.split(',')]
-
-    # Remove duplicates by converting the list to a set and then back to a list
-    unique_genres_list = list(set(genres_list))
-
-    return render(request, "reviews/genres_list.html", {"unique_genres_list": unique_genres_list})
 
 
 
