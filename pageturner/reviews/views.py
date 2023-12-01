@@ -11,11 +11,42 @@ from members.forms import SnippetForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ReviewCommentForm
 from django.contrib import messages
-from .forms import ReviewForm
+from .forms import ReviewForm, BookRecommendationsForm1, BookRecommendationsForm2, BookRecommendationsForm3, \
+    BookRecommendationsForm4, BookRecommendationsForm5
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 import random
 from .filters import BookFilter
+from formtools.wizard.views import SessionWizardView
+from django.http import HttpResponseRedirect
+
+
+FORMS = [
+        ("genre", BookRecommendationsForm1),
+        ("author", BookRecommendationsForm2),
+        ("no_genre", BookRecommendationsForm3),
+        ("no_author", BookRecommendationsForm4),
+        ("rating", BookRecommendationsForm5)
+        ]
+
+TEMPLATES = {
+    "genre": "reviews/form/genre.html",
+    "author": "reviews/form/author.html",
+    "no_genre": "reviews/form/genre.html",
+    "no_author": "reviews/form/author.html",
+    "rating": "reviews/form/rating.html"
+    }
+
+
+class RecommendationWizard(SessionWizardView):
+    def get_template_names(self):
+        return [TEMPLATES[self.steps.current]]
+
+    def done(self, form_list, **kwargs):
+        form_data = [form.cleaned_data for form in form_list]
+        print(form_data)
+
+        return render(self.request, template_name="reviews/form/recommendations.html")
 
 
 def welcome_page(request):
@@ -23,7 +54,6 @@ def welcome_page(request):
     books = list(Book.objects.all())
     random_books = random.sample(books, 12)
     book_collections = list(BookCollection.objects.all())
-
 
     if request.user.is_authenticated:
 

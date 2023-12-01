@@ -37,48 +37,53 @@ class ReviewCommentForm(forms.ModelForm):
 
 
 class BookRecommendationsForm1(forms.ModelForm):
-    type_choices = [
-        ("CLAS", "Classics"),
-        ("CONT", "Contemporary")
-        ]
-    choice_type = forms.ChoiceField(choices=type_choices)
+    genre_choices = genre_tuples()
+    genre_choice_field = forms.MultipleChoiceField(choices=genre_choices)
+
+    class Meta:
+        model = Book
+        fields = ['genre_choice_field']
 
 
 class BookRecommendationsForm2(forms.ModelForm):
-    def __init__(self, request, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        genre_choices = genre_tuples(request)
+    authors_choices = author_tuples()
+    author_choice_field = forms.MultipleChoiceField(choices=authors_choices)
 
-        self.fields['genre_choice'] = forms.MultipleChoiceField(choices=genre_choices)
+    class Meta:
+        model = Book
+        fields = ['author_choice_field']
 
 
 class BookRecommendationsForm3(forms.ModelForm):
-    def __init__(self, request, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        authors_choices = author_tuples(request)
+    genre_choices = genre_tuples()
+    no_genre_choice_field = forms.MultipleChoiceField(choices=genre_choices)
 
-        self.fields['author_choice'] = forms.MultipleChoiceField(choices=authors_choices)
+    class Meta:
+        model = Book
+        fields = ['no_genre_choice_field']
 
 
 class BookRecommendationsForm4(forms.ModelForm):
-    def __init__(self, request, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        genre_choices = genre_tuples(request)
+    authors_choices = author_tuples()
+    no_author_choice_field = forms.MultipleChoiceField(choices=authors_choices)
 
-        self.fields['no_genre_choice'] = forms.MultipleChoiceField(choices=genre_choices)
+    class Meta:
+        model = Book
+        fields = ['no_author_choice_field']
 
 
 class BookRecommendationsForm5(forms.ModelForm):
-    def __init__(self, request, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    rating_choices = [("5", "5"),
+                      ("4", "4"),
+                      ("3", "3"),
+                      ("2", "2"),
+                      ("1", "1")
+                      ]
+    rating_field = forms.ChoiceField(choices=rating_choices)
 
-        authors_choices = author_tuples(request)
-
-        self.fields['no_author_choice'] = forms.MultipleChoiceField(choices=authors_choices)
-
-
-class BookRecommendationsForm6(forms.ModelForm):
-    rating = forms.CharField(widget=forms.HiddenInput())
+    class Meta:
+        model = Book
+        fields = ['rating_field']

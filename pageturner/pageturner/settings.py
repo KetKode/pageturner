@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'reviews',
     'members',
+    'formtools',
     'widget_tweaks',
     'django_extensions',
     'import_export',
