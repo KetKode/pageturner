@@ -54,8 +54,23 @@ class BookRecommendationForm2(forms.ModelForm):
         fields = ["genre_choice_field"]
 
 
-class BookRecommendationForm3(forms.ModelForm):
-    pass
+class BookRecommendationForm3(forms.Form):
+    series_choices = [
+        ("FRI", "Friends"),
+        ("GOT", "Game of Thrones"),
+        ("YSH", "Young Sheldon"),
+        ("BRB", "Breaking Bad"),
+        ("DES", "Desperate Housewives"),
+        ("SAC", "Sex and the City"),
+        ("CRO", "The Crown"),
+        ("OFF", "The Office"),
+        ("BLA", "Black Mirror"),
+        ("EMI", "Emily in Paris"),
+        ("GIL", "Gilmore Girls"),
+        ("HOU", "House MD")
+        ]
+
+    series_choice_field = forms.MultipleChoiceField(choices=series_choices)
 
 
 class BookRecommendationForm4(forms.ModelForm):
