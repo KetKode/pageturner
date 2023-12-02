@@ -92,5 +92,14 @@ class BookRecommendationForm4(forms.Form):
     description_choice_field = forms.MultipleChoiceField(choices=description_choices)
 
 
-class BookRecommendationForm5(forms.ModelForm):
-    pass
+class BookRecommendationForm5(forms.Form):
+    bookshelf_choices = [
+        ("1", "https://i.pinimg.com/564x/d4/6e/d3/d46ed3cdc5fa3fce6d6301469c457b8c.jpg"),
+        ("2", "https://i.pinimg.com/564x/b0/7b/4c/b07b4ce59e94da2f872486c3fe96dd99.jpg"),
+        ("3", "https://i.pinimg.com/564x/2b/32/2e/2b322e58f3cfedbed2e51e1c54b06c9b.jpg"),
+        ("4", "https://i.pinimg.com/564x/f8/77/55/f877555e94dfb204ad66d77ec14a2478.jpg"),
+        ("5", "https://i.pinimg.com/564x/c8/24/e2/c824e2df59320c5e19023b8f30e31397.jpg"),
+        ("6", "https://i.pinimg.com/564x/d6/21/57/d62157b2b321e670068e6674cdf934dd.jpg")
+        ]
+
+    bookshelf_choice_field = forms.ChoiceField(choices=bookshelf_choices)
