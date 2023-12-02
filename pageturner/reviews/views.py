@@ -11,11 +11,42 @@ from members.forms import SnippetForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ReviewCommentForm
 from django.contrib import messages
-from .forms import ReviewForm
+from .forms import ReviewForm, BookRecommendationForm1, BookRecommendationForm2, BookRecommendationForm3, \
+    BookRecommendationForm4, BookRecommendationForm5
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 import random
 from .filters import BookFilter
+from formtools.wizard.views import SessionWizardView
+from django.http import HttpResponseRedirect
+
+
+FORMS = [
+        ("cover", BookRecommendationForm1),
+        ("genre", BookRecommendationForm2),
+        ("series", BookRecommendationForm3),
+        ("user_description", BookRecommendationForm4),
+        ("bookshelf", BookRecommendationForm5)
+        ]
+
+TEMPLATES = {
+    "cover": "reviews/form/cover_choice.html",
+    "genre": "reviews/form/genre_choice.html",
+    "series": "reviews/form/series_choice.html",
+    "user_description": "reviews/form/user_description.html",
+    "bookshelf": "reviews/form/bookshelf.html"
+    }
+
+
+class RecommendationWizard(SessionWizardView):
+    def get_template_names(self):
+        return [TEMPLATES[self.steps.current]]
+
+    def done(self, form_list, **kwargs):
+        form_data = [form.cleaned_data for form in form_list]
+        print(form_data)
+
+        return render(self.request, template_name="reviews/form/recommendations.html")
 
 
 def welcome_page(request):

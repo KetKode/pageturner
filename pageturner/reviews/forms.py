@@ -1,5 +1,6 @@
 from django import forms
 from .models import Publisher, Review, Book, BookImport, ReviewComment
+from .utils import genre_tuples
 
 
 class BookSearchForm(forms.Form):
@@ -34,3 +35,28 @@ class ReviewCommentForm(forms.ModelForm):
         model = ReviewComment
         fields = ["body"]
 
+
+class BookRecommendationForm1(forms.ModelForm):
+    cover_choices = [(book.id, book.cover_url) for book in Book.objects.all()[22:28]]
+    cover_field = forms.ChoiceField(choices=cover_choices)
+    print(cover_choices)
+
+    class Meta:
+        model = Book
+        fields = ["cover_field"]
+
+
+class BookRecommendationForm2(forms.ModelForm):
+    pass
+
+
+class BookRecommendationForm3(forms.ModelForm):
+    pass
+
+
+class BookRecommendationForm4(forms.ModelForm):
+    pass
+
+
+class BookRecommendationForm5(forms.ModelForm):
+    pass
