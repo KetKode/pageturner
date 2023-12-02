@@ -39,7 +39,6 @@ class ReviewCommentForm(forms.ModelForm):
 class BookRecommendationForm1(forms.ModelForm):
     cover_choices = [(book.id, book.cover_url) for book in Book.objects.all()[22:28]]
     cover_field = forms.ChoiceField(choices=cover_choices)
-    print(cover_choices)
 
     class Meta:
         model = Book
@@ -47,7 +46,12 @@ class BookRecommendationForm1(forms.ModelForm):
 
 
 class BookRecommendationForm2(forms.ModelForm):
-    pass
+    genre_choices = genre_tuples()
+    genre_choice_field = forms.MultipleChoiceField(choices=genre_choices)
+
+    class Meta:
+        model = Book
+        fields = ["genre_choice_field"]
 
 
 class BookRecommendationForm3(forms.ModelForm):
