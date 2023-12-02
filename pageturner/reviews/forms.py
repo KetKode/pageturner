@@ -73,8 +73,23 @@ class BookRecommendationForm3(forms.Form):
     series_choice_field = forms.MultipleChoiceField(choices=series_choices)
 
 
-class BookRecommendationForm4(forms.ModelForm):
-    pass
+class BookRecommendationForm4(forms.Form):
+    description_choices = [
+        ("ADV", "Adventurous"),
+        ("FUN", "Fun"),
+        ("GEN", "Gentle"),
+        ("ROM", "Romantic"),
+        ("ENT", "Enthusiastic"),
+        ("CUR", "Curious"),
+        ("CON", "Constant"),
+        ("DEC", "Decisive"),
+        ("CAS", "Casual"),
+        ("CHI", "Chill"),
+        ("DED", "Dedicated"),
+        ("AVI", "Avid")
+        ]
+
+    description_choice_field = forms.MultipleChoiceField(choices=description_choices)
 
 
 class BookRecommendationForm5(forms.ModelForm):
